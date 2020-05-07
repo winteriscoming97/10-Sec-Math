@@ -3,15 +3,36 @@
   font-family: arial, sans-serif;
 }
 
+body {
+  background-color: hsl(160, 50%, 90%);
+}
+
 .container {
   width: 400px;
-  margin: 0 auto;
+  height: 600px;
+  margin: 100px auto;
+  background-color: white;
+  box-shadow: 10px 10px hsla(0, 0%, 70%, 40%);
+}
+
+p {
+  font-weight: bold;
 }
 
 .hero {
   text-align: center;
 }
 
+h1,
+h2 {
+  text-shadow: 2px 2px hsl(0, 0%, 70%);
+}
+
 h3 {
   display: block;
+  color: skyblue;
+}
+
+label {
+  color: hsl(0, 0%, 55%);
 }
