@@ -1,5 +1,6 @@
 * {
   box-sizing: border-box;
+  font-family: arial, sans-serif;
 }
 
 .container {
@@ -12,5 +13,5 @@
 }
 
 h3 {
-  display: inline-block;
+  display: block;
 }
