@@ -1,0 +1,16 @@
+* {
+  box-sizing: border-box;
+}
+
+.container {
+  width: 400px;
+  margin: 0 auto;
+}
+
+.hero {
+  text-align: center;
+}
+
+h3 {
+  display: inline-block;
+}
