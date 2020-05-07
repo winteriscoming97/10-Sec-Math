@@ -2,7 +2,9 @@ var currentQuestion;
 var max;
 var score = 0;
 var highScore = 0;
+var interval;
 var timeLeft = 10;
+
 
 var randomGen = function (max) {
   return Math.ceil(Math.random() * max);
@@ -25,23 +27,44 @@ var newQuestion = function (max) {
   $('.problem').text(currentQuestion.equation);
 }
 
+var startGame = function () {
+  if (!interval) {
+    if (timeLeft === 0) {
+      updateTimeLeft(10);
+    }
+    interval = setInterval(function () {
+    updateTimeLeft(-1);
+    $('.time').text(timeLeft);
+    if (timeLeft === 0) {
+      clearInterval(interval);
+      interval = undefined;
+      if (highScore < score) {
+        highScore = score;
+      }
+      score = 0;
+      $('.current-score').text('Current Score: ' + score);
+      $('.high-score').text('High Score: ' + highScore);
+    }
+    console.log(timeLeft);
+    }, 1000);
+  }
+}
+
+
+var updateTimeLeft = function (amount) {
+  timeLeft += amount;
+  $('.time').text(timeLeft);
+}
+
 var checkAnswer = function (userInput, answer) {
   if (Number(userInput) === answer) {
     score++;
     $('.user-input').val('');
+    updateTimeLeft(1);
     newQuestion(max);
     $('.current-score').text('Current Score: ' + score);
   }
 }
-
-var interval = setInterval(function () {
-  timeLeft--;
-  $('.time').text(timeLeft);
-  if (timeLeft === 0) {
-    clearInterval(interval);
-  }
-  console.log(timeLeft);
-}, 1000);
 
 
 //Start
@@ -51,6 +74,7 @@ $(document).ready(function () {
   newQuestion(max);
 
   $('.user-input').keyup(function () {
+    startGame();
     checkAnswer($(this).val(), currentQuestion.answer);
   });
 
