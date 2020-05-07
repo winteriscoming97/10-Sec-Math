@@ -5,18 +5,53 @@ var highScore = 0;
 var interval;
 var timeLeft = 10;
 
-
 var randomGen = function (max) {
   return Math.ceil(Math.random() * max);
+}
+
+//converting checked boxes into array of symbols
+var operationGen = function () {
+  var operations =  [];
+
+  $('form').children('input').get().forEach( function (operation) {
+    if (operation.checked) {
+      operations.push(operation.value);
+    }
+  });
+  if (operations.length <= 0) {
+    operations.push('+');
+  }
+  return operations;
 }
 
 var questionGen = function (max) {
   var question = {};
   var num1 = randomGen(max);
   var num2 = randomGen(max);
+  var operation = operationGen();
+  operation = operation[randomGen(operation.length - 1)];
 
-  question.answer = num1 + num2;
-  question.equation = String(num1) + ' + ' + String(num2);
+  switch (operation) {
+    case '+':
+      question.answer = num1 + num2;
+      question.equation = String(num1) + ' + ' + String(num2);
+      break;
+    case '-':
+      question.answer = num1 - num2;
+      question.equation = String(num1) + ' - ' + String(num2);
+      break;
+    case 'x':
+      question.answer = num1 * num2;
+      question.equation = String(num1) + ' * ' + String(num2);
+      break;
+    case '/':
+      question.answer = num2;
+      question.equation = String(num1 * num2) + ' / ' + String(num1);
+      break;
+  }
+
+
+
   console.log('Equation is: ' + question.equation);
   console.log('Answer is: ' + question.answer);
   return question;
@@ -72,7 +107,7 @@ $(document).ready(function () {
   max = $('#numRange').val();
   $('label').last().text(max);
   newQuestion(max);
-
+  operationGen();
   $('.user-input').keyup(function () {
     startGame();
     checkAnswer($(this).val(), currentQuestion.answer);
