@@ -37,8 +37,14 @@ var questionGen = function (max) {
       question.equation = String(num1) + ' + ' + String(num2);
       break;
     case '-':
-      question.answer = num1 - num2;
-      question.equation = String(num1) + ' - ' + String(num2);
+      if (num1 >= num2) {
+        question.answer = num1 - num2;
+        question.equation = String(num1) + ' - ' + String(num2);
+      }
+      else {
+        question.answer = num2 - num1;
+        question.equation = String(num2) + ' - ' + String(num1);
+      }
       break;
     case 'x':
       question.answer = num1 * num2;
